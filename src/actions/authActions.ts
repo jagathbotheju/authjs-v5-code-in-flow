@@ -10,7 +10,20 @@ export const loginGoogle = async (callbackUrl: string | undefined) => {
 };
 
 export const loginGithub = async () => {
-  await signIn("github", { redirectTo: "/" });
+  console.log("action - loginGithub");
+  try {
+    await signIn("github");
+    return {
+      success: true,
+      message: "Login Successful",
+    };
+  } catch (error) {
+    console.log("Github login error", "Email address already in use");
+    return {
+      success: false,
+      error: "Email already in use",
+    };
+  }
 };
 
 export const updateProfile = async (

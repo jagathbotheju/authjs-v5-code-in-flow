@@ -11,7 +11,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     logo: "/logo.png",
   },
   adapter: PrismaAdapter(prisma) as Adapter,
-  providers: [Google, Github],
+  providers: [
+    Google({
+      authorization: {
+        params: {
+          prompt: "consent",
+        },
+      },
+    }),
+    Github({
+      authorization: {
+        params: {
+          prompt: "consent",
+        },
+      },
+    }),
+  ],
   callbacks: {
     /**
      * additional user items not available at client side for security

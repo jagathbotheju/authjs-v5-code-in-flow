@@ -174,7 +174,20 @@ const LoginForm = ({ callbackUrl }: Props) => {
             type="submit"
             className="w-full mb-3"
             variant="secondary"
-            onClick={() => loginGithub()}
+            onClick={() =>
+              loginGithub()
+                .then((res) => {
+                  if (res.success) {
+                    return toast.success(res.message);
+                  } else {
+                    return toast.error(res.error);
+                  }
+                })
+                .catch((err) => {
+                  console.log("oauth error", err);
+                  return toast.error(err.message);
+                })
+            }
           >
             <div className="relative mr-2">
               <Image
